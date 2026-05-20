@@ -6,9 +6,9 @@ Website xem phim với giao diện, chức năng được bắt chước từ Ne
 
 ## Danh sách thành viên nhóm
 
-- Hồ Văn Minh
-* Dương Thái Nguyên
-+ Trần Thiên Long
+- Hồ Văn Minh 124000114
+* Dương Thái Nguyên 124001039
++ Trần Thiên Long 124000579
 
 ---
 
