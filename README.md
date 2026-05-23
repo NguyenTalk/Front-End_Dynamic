@@ -26,8 +26,8 @@ Website xem phim với giao diện, chức năng được bắt chước từ Ne
 
 | Category | Technology | Version |
 |----------|-----------|---------|
-| Framework | React | 19 |
-| Build Tool | Vite | 6 |
+| Core Framework | NextJS | 15 |
+| UI Library | React | 19 |
 | Styling | Tailwind CSS | 4 |
 | Data Fetching | TanStack Query | 5 |
 | State Management | Redux Toolkit | 2 |
@@ -43,15 +43,16 @@ Website xem phim với giao diện, chức năng được bắt chước từ Ne
 ## Cách chạy web trên localhost
 
 ### Yêu cầu
-
+- git (có thể bỏ qua bằng cách tải file zip nhưng không khuyến khịch)
 - Node.js 18+
+- npm (có thể dùng package manager khác của Node tùy ý)
 - [TMDB API key](https://www.themoviedb.org/settings/api) (miễn phí)
 
 ### Cài đặt
 
 ```Lệnh bash
-git clone https://github.com/Ming-ely/Web_Movie.git
-cd Web_Movie
+git clone https://github.com/NguyenTalk/Front-End_Dynamic.git
+cd Front-End_Dynamic
 npm install
 ```
 
