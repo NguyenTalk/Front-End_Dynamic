@@ -1,12 +1,14 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
+const js = require('@eslint/js');
+const globals = require('globals');
+const reactHooks = require('eslint-plugin-react-hooks');
+const tsParser = require('@typescript-eslint/parser');
 
-export default [
+module.exports = [
   { ignores: ['dist', '.next', 'node_modules'] },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
+      parser: tsParser,
       ecmaVersion: 2024,
       globals: globals.browser,
       parserOptions: {

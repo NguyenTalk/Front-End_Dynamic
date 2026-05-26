@@ -24,9 +24,10 @@ interface MovieModalProps {
 
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
   const isTV = movie.media_type === 'tv' || (!movie.title && !!movie.name);
-  const { data: detailData, isLoading } = isTV
-    ? useTVDetails(movie.id)
-    : useMovieDetails(movie.id);
+  const tvDetails = useTVDetails(movie.id);
+  const movieDetails = useMovieDetails(movie.id);
+  const detailData = isTV ? tvDetails.data : movieDetails.data;
+  const isLoading = isTV ? tvDetails.isLoading : movieDetails.isLoading;
 
   const title = movie.title || movie.name || 'Movie Details';
   const backdropUrl = img.backdrop(movie.backdrop_path || null);

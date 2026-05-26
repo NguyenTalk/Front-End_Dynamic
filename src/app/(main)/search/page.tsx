@@ -60,7 +60,7 @@ export default function SearchPage() {
               onClick={() => setSelectedMovie(item)}
             >
               <img
-                src={img.poster(item.poster_path) || ''}
+                src={img.poster(item.poster_path ?? null) || ''}
                 alt={item.title || item.name}
                 className="w-full h-auto rounded-md object-cover aspect-[2/3]"
               />

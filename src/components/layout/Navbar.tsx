@@ -2,10 +2,10 @@
 
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // 🚀 Thêm Import này để render ảnh logo mới
 import { usePathname, useRouter } from 'next/navigation';
 import { useScrolled } from '@/hooks/useScrolled';
-import { SearchIcon, BellIcon, ArrowDownIcon } from '@/icons'; // 💡 Đã xóa sạch chữ NetflixIcon ở đây
+import { SearchIcon, BellIcon, ArrowDownIcon } from '@/icons';
+import DynamicLogo from '@/icons/DynamicLogo';
 import { auth } from '@/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -48,15 +48,8 @@ export default function Navbar() {
       {/* Left */}
       <div className="flex items-center gap-6">
         <Link href="/" className="flex-shrink-0 flex items-center">
-          {/* 🎨 Thay thế thẻ <NetflixIcon /> cũ bằng thẻ Image này: */}
-          <Image
-            src="/assets/images/netflix-new-logo.png" 
-            alt="Netflix Modern Logo"
-            width={110}   // Chiều rộng hiển thị cân đối trên Navbar
-            height={32}   // Chiều cao cân đối trên Navbar
-            priority      // Giúp logo load ngay lập tức không bị delay
-            className="object-contain cursor-pointer active:scale-95 transition-transform"
-          />
+          {/* 🎨 Logo Dynamic theo phong cách Netflix */}
+          <DynamicLogo className="h-8 w-auto cursor-pointer hover:scale-105 transition-transform" />
         </Link>
 
         <ul className="hidden md:flex items-center gap-5">

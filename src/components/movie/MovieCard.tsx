@@ -36,8 +36,8 @@ export default function MovieCard({
   )?.key;
 
   const posterUrl = isLargeRow
-    ? img.poster(movie.poster_path)
-    : img.backdrop(movie.backdrop_path, 'w780') || img.poster(movie.poster_path);
+    ? img.poster(movie.poster_path ?? null)
+    : img.backdrop(movie.backdrop_path ?? null, 'w780') || img.poster(movie.poster_path ?? null);
 
   if (!posterUrl) return null;
 

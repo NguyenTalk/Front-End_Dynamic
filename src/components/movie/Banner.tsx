@@ -63,7 +63,7 @@ export default function Banner({ movie, onMoreInfo }: BannerProps) {
     <div className="relative w-full h-[85vh] overflow-hidden bg-black">
       {/* 🎬 Render Trailer */}
       {trailerKey && isPlaying ? (
-        <div className="absolute inset-0 w-full h-full pointer-events-none scale-125">
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
           <iframe
             // 🚀 Thay đổi ở đây: Truyền biến trạng thái isMuted (1 là tắt tiếng, 0 là bật tiếng) vào URL
             src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&rel=0&loop=1&playlist=${trailerKey}&showinfo=0&modestbranding=1&iv_load_policy=3&enablejsapi=1`}

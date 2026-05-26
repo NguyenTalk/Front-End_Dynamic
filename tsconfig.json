@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "ignoreDeprecations": "6.0", // 🚀 Đã sửa thành "6.0" để xóa sạch gạch đỏ cảnh báo của VS Code
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
