@@ -43,7 +43,7 @@ Website xem phim với giao diện, chức năng được bắt chước từ Ne
 ## Cách chạy web trên localhost
 
 ### Yêu cầu
-- git (có thể bỏ qua bằng cách tải file zip nhưng không khuyến khịch)
+- git (có thể bỏ qua bằng cách tải file zip nhưng không khuyến khích)
 - Node.js 18+
 - npm (có thể dùng package manager khác của Node tùy ý)
 - [TMDB API key](https://www.themoviedb.org/settings/api) (miễn phí)
