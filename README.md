@@ -61,8 +61,8 @@ npm install
 Tạo một file `.env` ngay trong thư mục gốc:
 
 ```env
-VITE_TMDB_API_KEY=966741e6a93b974626716efc718d939e
-VITE_TMDB_IMAGE_BASE=https://image.tmdb.org/t/p
+NEXT_PUBLIC_TMDB_API_KEY=966741e6a93b974626716efc718d939e
+NEXT_PUBLIC_TMDB_IMAGE_BASE=https://image.tmdb.org/t/p
 ```
 ### Chạy web
 
