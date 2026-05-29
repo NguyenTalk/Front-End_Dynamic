@@ -2,6 +2,7 @@ const js = require('@eslint/js');
 const globals = require('globals');
 const reactHooks = require('eslint-plugin-react-hooks');
 const tsParser = require('@typescript-eslint/parser');
+const next = require('eslint-config-next');
 
 module.exports = [
   { ignores: ['dist', '.next', 'node_modules'] },
@@ -23,4 +24,5 @@ module.exports = [
       ...reactHooks.configs.recommended.rules,
     },
   },
+  ...next,
 ];
