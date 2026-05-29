@@ -106,22 +106,54 @@ export default function Banner({ movie, onMoreInfo }: BannerProps) {
         </p>
 
         <div className="flex gap-3">
-          <Button 
-            variant="play" 
-            size="md" 
-            className="flex items-center gap-2"
-            onClick={() => setIsPlaying(!isPlaying)}
+          <motion.div
+            whileHover={{
+              scale: 1.1,
+              rotate: [0, -2, 2, -2, 0],
+            }}
+            transition={{
+              rotate: {
+                duration: 0.4,
+                ease: 'easeInOut',
+              },
+              scale: {
+                duration: 0.2,
+              },
+            }}
           >
-            <PlayIcon /> {isPlaying ? 'Pause' : 'Play'}
-          </Button>
-          <Button
-            variant="secondary"
-            size="md"
-            onClick={() => onMoreInfo(movie)}
-            className="flex items-center gap-2"
+            <Button 
+              variant="play" 
+              size="md" 
+              className="flex items-center gap-2"
+              onClick={() => setIsPlaying(!isPlaying)}
+            >
+              <PlayIcon /> {isPlaying ? 'Pause' : 'Play'}
+            </Button>
+          </motion.div>
+          <motion.div
+            whileHover={{
+              scale: 1.1,
+              rotate: [0, -2, 2, -2, 0],
+            }}
+            transition={{
+              rotate: {
+                duration: 0.4,
+                ease: 'easeInOut',
+              },
+              scale: {
+                duration: 0.2,
+              },
+            }}
           >
-            <InformationIcon /> More Info
-          </Button>
+            <Button
+              variant="secondary"
+              size="md"
+              onClick={() => onMoreInfo(movie)}
+              className="flex items-center gap-2"
+            >
+              <InformationIcon /> More Info
+            </Button>
+          </motion.div>
         </div>
       </div>
 

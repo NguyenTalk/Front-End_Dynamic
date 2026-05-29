@@ -1,13 +1,16 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useScrolled } from '@/hooks/useScrolled';
-import { SearchIcon, BellIcon, ArrowDownIcon } from '@/icons';
+import { SearchIcon, ArrowDownIcon } from '@/icons';
 import DynamicLogo from '@/icons/DynamicLogo';
 import { auth } from '@/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearch } from '@/hooks/useMovies';
+import { useDebounce } from '@/hooks/useDebounce';
+import { img } from '@/api/tmdb';
 
 export default function Navbar() {
   const scrolled = useScrolled();
@@ -16,8 +19,39 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Search dropdown logic
+  const debouncedQuery = useDebounce(searchQuery, 300);
+  const { data: searchResults = [] } = useSearch(isClient ? debouncedQuery : '');
+  
+  interface SearchResult {
+    id: number;
+    title?: string;
+    name?: string;
+    poster_path?: string | null;
+    media_type?: string;
+  }
+  
+  const filteredSearchResults = (searchResults as SearchResult[])?.filter(
+    (item) => item.poster_path && (item.media_type === 'movie' || item.media_type === 'tv')
+  ).slice(0, 8) || [];
 
   const isActive = (path: string) => pathname === path;
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
+  const handleSearchResultClick = (movie: SearchResult) => {
+    router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    setSearchOpen(false);
+    setSearchQuery('');
+  };
 
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,58 +90,134 @@ export default function Navbar() {
            {/* Các thẻ <li> Home, TVShows, Movies... bên dưới giữ nguyên vẹn */}
           {/* Home */}
           <li>
-            <Link
-              href="/"
-              className={`text-sm transition-colors ${
-                isActive('/')
-                  ? 'text-white font-semibold'
-                  : 'text-gray-300 hover:text-white'
-              }`}
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -2, 2, -2, 0],
+              }}
+              transition={{
+                rotate: {
+                  duration: 0.4,
+                  ease: 'easeInOut',
+                },
+                scale: {
+                  duration: 0.2,
+                },
+              }}
             >
-              Home
-            </Link>
+              <Link
+                href="/"
+                className={`text-sm relative inline-block ${
+                  isActive('/')
+                    ? 'text-white font-semibold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                Home
+                {isActive('/') && (
+                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-gradient-to-r from-netflix-red to-transparent"></span>
+                )}
+              </Link>
+            </motion.div>
           </li>
 
           {/* TVShows */}
           <li>
-            <Link
-              href="/tv"
-              className={`text-sm transition-colors ${
-                isActive('/tv')
-                  ? 'text-white font-semibold'
-                  : 'text-gray-300 hover:text-white'
-              }`}
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -2, 2, -2, 0],
+              }}
+              transition={{
+                rotate: {
+                  duration: 0.4,
+                  ease: 'easeInOut',
+                },
+                scale: {
+                  duration: 0.2,
+                },
+              }}
             >
-              TVShows
-            </Link>
+              <Link
+                href="/tv"
+                className={`text-sm relative inline-block ${
+                  isActive('/tv')
+                    ? 'text-white font-semibold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                TVShows
+                {isActive('/tv') && (
+                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-gradient-to-r from-netflix-red to-transparent"></span>
+                )}
+              </Link>
+            </motion.div>
           </li>
 
           {/* Movies */}
           <li>
-            <Link
-              href="/movies"
-              className={`text-sm transition-colors ${
-                isActive('/movies')
-                  ? 'text-white font-semibold'
-                  : 'text-gray-300 hover:text-white'
-              }`}
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -2, 2, -2, 0],
+              }}
+              transition={{
+                rotate: {
+                  duration: 0.4,
+                  ease: 'easeInOut',
+                },
+                scale: {
+                  duration: 0.2,
+                },
+              }}
             >
-              Movies
-            </Link>
+              <Link
+                href="/movies"
+                className={`text-sm relative inline-block ${
+                  isActive('/movies')
+                    ? 'text-white font-semibold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                Movies
+                {isActive('/movies') && (
+                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-gradient-to-r from-netflix-red to-transparent"></span>
+                )}
+              </Link>
+            </motion.div>
           </li>
 
           {/* New Popular */}
           <li>
-            <Link
-              href="/new-popular"
-              className={`text-sm transition-colors ${
-                isActive('/new-popular')
-                  ? 'text-white font-semibold'
-                  : 'text-gray-300 hover:text-white'
-              }`}
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -2, 2, -2, 0],
+              }}
+              transition={{
+                rotate: {
+                  duration: 0.4,
+                  ease: 'easeInOut',
+                },
+                scale: {
+                  duration: 0.2,
+                },
+              }}
             >
-              NewPopular
-            </Link>
+              <Link
+                href="/new-popular"
+                className={`text-sm relative inline-block ${
+                  isActive('/new-popular')
+                    ? 'text-white font-semibold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                NewPopular
+                {isActive('/new-popular') && (
+                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-gradient-to-r from-netflix-red to-transparent"></span>
+                )}
+              </Link>
+            </motion.div>
           </li>
         </ul>
       </div>
@@ -116,34 +226,78 @@ export default function Navbar() {
       <div className="flex items-center gap-4">
         <AnimatePresence>
           {searchOpen ? (
-            <motion.form
+            <motion.div
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: 260, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onSubmit={handleSearchSubmit}
-              className="flex items-center bg-black/80 border border-white/50 overflow-hidden"
+              className="relative"
             >
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchOpen(false);
-                  setSearchQuery('');
-                }}
-                className="px-2 bg-transparent"
-              >
-                <SearchIcon />
-              </button>
-              <input
-                autoFocus
-                type="text"
-                placeholder="Titles, people, genres"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onBlur={() => !searchQuery && setSearchOpen(false)}
-                className="w-full py-1.5 pr-3 bg-transparent text-white text-sm outline-none placeholder-gray-400"
-              />
-            </motion.form>
+              <form onSubmit={handleSearchSubmit} className="flex items-center bg-black/80 border border-white/50 overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchOpen(false);
+                    setSearchQuery('');
+                  }}
+                  className="px-2 bg-transparent"
+                >
+                  <SearchIcon />
+                </button>
+                <input
+                  autoFocus
+                  type="text"
+                  placeholder="Titles, people, genres"
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  onBlur={() => setTimeout(() => !searchQuery && setSearchOpen(false), 200)}
+                  className="w-full py-1.5 pr-3 bg-transparent text-white text-sm outline-none placeholder-gray-400"
+                />
+              </form>
+
+              {/* Search Results Dropdown */}
+              {isClient && searchQuery && filteredSearchResults.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-netflix-dark/95 border border-gray-700 rounded-md shadow-xl max-h-96 overflow-y-auto z-50"
+                >
+                  {filteredSearchResults.map((movie) => (
+                    <button
+                      key={movie.id}
+                      onClick={() => handleSearchResultClick(movie)}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors text-left border-b border-gray-700/50 last:border-b-0 bg-transparent"
+                    >
+                      <img
+                        src={img.poster(movie.poster_path ?? null) || ''}
+                        alt={movie.title || movie.name}
+                        className="w-10 h-16 object-cover rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white text-sm font-medium truncate">
+                          {movie.title || movie.name}
+                        </p>
+                        <p className="text-gray-400 text-xs">
+                          {movie.media_type === 'tv' ? 'TV Show' : 'Movie'}
+                        </p>
+                      </div>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+
+              {isClient && searchQuery && filteredSearchResults.length === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-netflix-dark/95 border border-gray-700 rounded-md shadow-xl p-4 z-50"
+                >
+                  <p className="text-gray-400 text-sm text-center">No results found</p>
+                </motion.div>
+              )}
+            </motion.div>
           ) : (
             <button
               onClick={() => setSearchOpen(true)}
@@ -153,10 +307,6 @@ export default function Navbar() {
             </button>
           )}
         </AnimatePresence>
-
-        <button className="bg-transparent hidden sm:block hover:opacity-80 transition-opacity">
-          <BellIcon />
-        </button>
 
         {/* Profile dropdown */}
         <div

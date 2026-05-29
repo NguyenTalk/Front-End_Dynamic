@@ -1,4 +1,4 @@
-// File: E:\HocKi4\Frontend\Web_Movie\src\app\(main)\page.tsx
+// File: E:\HocKi4\Frontend\Front-End_Dynamic\src\app\(main)\page.tsx
 import * as entry from '../../../../src/app/(main)/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

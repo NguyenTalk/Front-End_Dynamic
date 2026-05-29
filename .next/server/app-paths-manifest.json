@@ -1,6 +1,3 @@
 {
-  "/(main)/tv/page": "app/(main)/tv/page.js",
-  "/(main)/page": "app/(main)/page.js",
-  "/(main)/new-popular/page": "app/(main)/new-popular/page.js",
-  "/(main)/movies/page": "app/(main)/movies/page.js"
+  "/(main)/page": "app/(main)/page.js"
 }

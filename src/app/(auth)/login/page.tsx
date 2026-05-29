@@ -2,18 +2,19 @@
 
 import { useState, useRef, FormEvent } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // 🚀 Import Image để sử dụng logo mới tối ưu
 import { useRouter } from 'next/navigation'; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app'; 
 import { auth } from '@/firebase';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import DynamicLogo from '@/icons/DynamicLogo';
 
 export default function LoginPage() {
   const router = useRouter(); 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,21 @@ export default function LoginPage() {
 
     const email = emailRef.current?.value || '';
     const password = passwordRef.current?.value || '';
+    const confirmPassword = confirmPasswordRef.current?.value || '';
+
+    // Kiểm tra xác nhận mật khẩu khi đăng ký
+    if (isSignUp) {
+      if (password !== confirmPassword) {
+        setError('Passwords do not match. Please try again.');
+        setLoading(false);
+        return;
+      }
+      if (password.length < 6) {
+        setError('Password must be at least 6 characters.');
+        setLoading(false);
+        return;
+      }
+    }
 
     try {
       if (isSignUp) {
@@ -65,15 +81,8 @@ export default function LoginPage() {
       {/* Nav */}
       <nav className="relative z-10 px-6 md:px-12 py-5 flex items-center">
         <Link href="/">
-          {/* 🎨 Đã thay thế sang Logo mới siêu xịn mịn bằng thẻ Image */}
-          <Image
-            src="/assets/images/netflix-new-logo.png"
-            alt="Netflix Modern Logo"
-            width={150}  // Kích thước logo ở trang Login lớn hơn Navbar một chút cho đẹp mắt
-            height={42}
-            priority     // Ưu tiên tải trước logo này
-            className="object-contain cursor-pointer active:scale-95 transition-transform"
-          />
+          {/* 🎨 Logo Dynamic theo phong cách Netflix - giống như ở Dashboard */}
+          <DynamicLogo className="h-10 w-auto cursor-pointer hover:scale-105 transition-transform" />
         </Link>
       </nav>
 
@@ -101,6 +110,17 @@ export default function LoginPage() {
               required
               onChange={() => setError('')}
             />
+
+            {isSignUp && (
+              <Input
+                ref={confirmPasswordRef}
+                type="password"
+                placeholder="Confirm Password"
+                autoComplete="new-password"
+                required
+                onChange={() => setError('')}
+              />
+            )}
 
             {error && (
               <p className="text-netflix-red text-sm bg-netflix-red/10 px-3 py-2 rounded">
