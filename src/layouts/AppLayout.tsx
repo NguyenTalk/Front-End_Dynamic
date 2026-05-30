@@ -1,7 +1,8 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+// ⚠️ File cũ không được sử dụng trong Next.js app - Vui lòng xóa
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import { auth } from '@/firebase';
 import { login, logout, selectUser } from '@/features/userSlice';
 import Navbar from '@/components/layout/Navbar';
@@ -11,22 +12,22 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const AppLayout = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const user = useSelector(selectUser);
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
+      if (firebaseUser && firebaseUser.email) {
         dispatch(login({ uid: firebaseUser.uid, email: firebaseUser.email }));
       } else {
         dispatch(logout());
-        navigate('/auth/login');
+        router.push('/auth/login');
       }
       setAuthChecked(true);
     });
     return unsubscribe;
-  }, [dispatch, navigate]);
+  }, [dispatch, router]);
 
   if (!authChecked) return <LoadingScreen />;
   if (!user) return null;
@@ -36,7 +37,7 @@ const AppLayout = () => {
       <Navbar />
       <main>
         <ErrorBoundary>
-          <Outlet />
+          <div>{/* Outlet from Next.js routing should be here */}</div>
         </ErrorBoundary>
       </main>
       <Footer />

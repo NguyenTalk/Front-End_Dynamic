@@ -23,7 +23,7 @@ const ComingSoonRow = ({ movies, onClick }: ComingSoonRowProps) => {
           onClick={() => onClick(movie)}
         >
           <img
-            src={img.poster(movie.poster_path) || ''}
+            src={img.poster(movie.poster_path || null) || ''}
             className="w-32 rounded"
           />
 
